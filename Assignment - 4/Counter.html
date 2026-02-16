@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Counter</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Verdana, sans-serif;
+    background:#222;
+    color:white;
+    display:grid;
+    place-items:center;
+    height:100vh;
+}
+
+.box{
+    background:#333;
+    padding:30px 50px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 0 20px rgba(0,0,0,0.6);
+}
+
+.counter{
+    font-size:60px;
+    margin:25px 0;
+    color:#00e6e6;
+}
+
+.btn{
+    padding:12px 25px;
+    margin:6px;
+    border-radius:25px;
+    border:none;
+    font-size:15px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.plus{ background:#00cc66; color:white; }
+.minus{ background:#ff9933; color:white; }
+.reset{ background:#ff3366; color:white; }
+
+.btn:hover{
+    transform:scale(1.05);
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h2>Clicks Tracker</h2>
+<div class="counter" id="number">0</div>
+
+<button class="btn plus" onclick="add()">Increase</button>
+<button class="btn minus" onclick="sub()">Decrease</button>
+<button class="btn reset" onclick="clearCount()">Reset</button>
+</div>
+
+<script>
+var total = 0;
+
+function update(){
+    document.getElementById("number").textContent = total;
+}
+
+function add(){
+    total += 1;
+    update();
+}
+
+function sub(){
+    total -= 1;
+    update();
+}
+
+function clearCount(){
+    total = 0;
+    update();
+}
+</script>
+
+</body>
+</html>

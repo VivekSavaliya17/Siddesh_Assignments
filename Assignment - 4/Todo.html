@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tasks</title>
+<style>
+body{
+    background:#0f172a;
+    font-family:Verdana;
+    text-align:center;
+    color:white;
+    margin-top:60px;
+}
+
+.box{
+    background:#1e293b;
+    padding:20px;
+    width:300px;
+    margin:auto;
+    border-radius:10px;
+}
+
+input{
+    padding:8px;
+    width:70%;
+}
+
+button{
+    padding:6px 10px;
+    margin:5px;
+    cursor:pointer;
+}
+
+li{
+    margin-top:10px;
+    background:#334155;
+    padding:6px;
+    border-radius:5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h3>My Tasks</h3>
+
+<input id="task">
+<button onclick="add()">Add</button>
+
+<ul id="list"></ul>
+</div>
+
+<script>
+function add(){
+    let text = document.getElementById("task").value;
+
+    if(text==""){
+        alert("Enter task");
+        return;
+    }
+
+    let li = document.createElement("li");
+    li.innerHTML = text +
+        " <button onclick='edit(this)'>Edit</button>" +
+        " <button onclick='this.parentElement.remove()'>Delete</button>";
+
+    document.getElementById("list").appendChild(li);
+    document.getElementById("task").value="";
+}
+
+function edit(btn){
+    let li = btn.parentElement;
+    let oldText = li.firstChild.textContent;
+    let newText = prompt("Edit task:", oldText);
+
+    if(newText){
+        li.firstChild.textContent = newText + " ";
+    }
+}
+</script>
+
+</body>
+</html>

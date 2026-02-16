@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Registration Form</title>
+<style>
+body{
+    margin:0;
+    font-family:Verdana;
+    background:#1c1c1c;
+    display:grid;
+    place-items:center;
+    height:100vh;
+    color:white;
+}
+
+.card{
+    background:#2b2b2b;
+    padding:30px;
+    border-radius:18px;
+    width:330px;
+    box-shadow:0 0 15px black;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin-top:12px;
+    border-radius:6px;
+    border:none;
+}
+
+.msg{
+    color:#ff6666;
+    font-size:13px;
+    height:15px;
+}
+
+.btns{
+    margin-top:15px;
+    display:flex;
+    justify-content:space-between;
+}
+
+button{
+    padding:10px;
+    width:48%;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.ok{ background:#00cc99; color:white; }
+.clear{ background:#ff4444; color:white; }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h2>Create Account</h2>
+
+<form onsubmit="return check()">
+<input id="n" placeholder="Full Name">
+<div class="msg" id="e1"></div>
+
+<input id="em" placeholder="Email Address">
+<div class="msg" id="e2"></div>
+
+<input id="ph" placeholder="Phone (10 digits)">
+<div class="msg" id="e3"></div>
+
+<input type="password" id="pw" placeholder="Password">
+<div class="msg" id="e4"></div>
+
+<div class="btns">
+<button class="ok">Submit</button>
+<button type="reset" class="clear">Reset</button>
+</div>
+</form>
+</div>
+
+<script>
+function check(){
+let a=n.value.trim();
+let b=em.value.trim();
+let c=ph.value.trim();
+let d=pw.value.trim();
+
+e1.innerText=e2.innerText=e3.innerText=e4.innerText="";
+
+let good=true;
+
+if(a.length<3){ e1.innerText="Enter valid name"; good=false; }
+if(!b.includes("@")){ e2.innerText="Email incorrect"; good=false; }
+if(c.length!=10 || isNaN(c)){ e3.innerText="Phone must be 10 digits"; good=false; }
+if(d.length<6){ e4.innerText="Password too short"; good=false; }
+
+if(good) alert("Account Created!");
+return good;
+}
+</script>
+
+</body>
+</html>
