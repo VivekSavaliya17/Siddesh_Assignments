@@ -1,0 +1,105 @@
+//Social Media
+
+use SocialDB
+
+// USERS
+db.Users.insertMany([
+ {name:"Amit"},
+ {name:"Sneha"},
+ {name:"Riya"}
+])
+
+// FOLLOWERS
+db.Followers.insertMany([
+ {user:"Sneha",follower:"Amit"},
+ {user:"Sneha",follower:"Riya"},
+ {user:"Riya",follower:"Amit"}
+])
+
+// POSTS WITH NESTED COMMENTS & LIKES
+db.Posts.insertMany([
+ {
+  user:"Sneha",
+  likes:[{user:"Amit"},{user:"Riya"}],
+  comments:[
+    {user:"Amit",text:"Nice"},
+    {user:"Riya",text:"Wow"}
+  ],
+  date:new Date("2025-01-01")
+ },
+ {
+  user:"Amit",
+  likes:[{user:"Sneha"}],
+  comments:[{user:"Riya",text:"Good"}],
+  date:new Date("2025-02-01")
+ }
+])
+
+// MOST FOLLOWERS
+db.Followers.aggregate([
+ {$group:{_id:"$user",totalFollowers:{$sum:1}}},
+ {$sort:{totalFollowers:-1}}
+])
+
+// POSTS WITH MOST LIKES
+db.Posts.aggregate([
+ {$project:{user:1,likesCount:{$size:"$likes"}}},
+ {$sort:{likesCount:-1}}
+])
+
+// USER ACTIVITY OVER TIME
+db.Posts.aggregate([
+ {$group:{_id:{$month:"$date"},totalPosts:{$sum:1}}}
+])
+
+
+
+// E-COMMERCE
+
+use FriendShopDB
+
+db.Products.insertMany([
+ {name:"Keyboard",price:1200,category:"Electronics"},
+ {name:"Shoes",price:2200,category:"Fashion"}
+])
+
+db.Customers.insertMany([
+ {name:"Arjun"},
+ {name:"Meera"}
+])
+
+db.Orders.insertMany([
+ {
+  customer:"Arjun",
+  items:[{name:"Keyboard",qty:2,price:1200}],
+  reviews:[{rating:5}],
+  date:new Date("2025-01-01")
+ },
+ {
+  customer:"Meera",
+  items:[{name:"Shoes",qty:1,price:2200}],
+  reviews:[{rating:4}],
+  date:new Date("2025-02-01")
+ }
+])
+
+// TOP SELLING PRODUCTS PER CATEGORY
+db.Orders.aggregate([
+ {$unwind:"$items"},
+ {$group:{_id:"$items.name",totalSold:{$sum:"$items.qty"}}},
+ {$sort:{totalSold:-1}}
+])
+
+// CUSTOMER PURCHASE PATTERN
+db.Orders.aggregate([
+ {$group:{_id:"$customer",orders:{$sum:1}}}
+])
+
+// MONTHLY REVENUE
+db.Orders.aggregate([
+ {$unwind:"$items"},
+ {$group:{
+   _id:{$month:"$date"},
+   revenue:{$sum:{$multiply:["$items.qty","$items.price"]}}
+ }}
+])
